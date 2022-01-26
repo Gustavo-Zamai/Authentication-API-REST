@@ -1,0 +1,30 @@
+{
+  "name": "ms-authentication-nodejs",
+  "version": "1.0.0",
+  "description": "API to authenticate users, to give access to micro services.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./",
+    "build": "tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gustavo-Zamai/Authentication-API-REST.git"
+  },
+  "keywords": [
+    "Javascript",
+    "Typescript",
+    "NodeJS"
+  ],
+  "author": "Gustavo Simão Zamai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gustavo-Zamai/Authentication-API-REST/issues"
+  },
+  "homepage": "https://github.com/Gustavo-Zamai/Authentication-API-REST#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.12",
+    "typescript": "^4.5.5"
+  }
+}
