@@ -8,10 +8,10 @@ app.use(express.json()); //middleware
 app.use(express.urlencoded({ extended: true }));
 
 //Route configuration
-app.use(usersRoute);
 app.use(statusRoute);
+app.use(usersRoute);
 
 //Start Server
 app.listen(3000, () => {
-  console.log("Running on port 3000");
+  console.log("Running on port 3000!");
 });
