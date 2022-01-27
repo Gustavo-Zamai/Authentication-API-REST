@@ -10,7 +10,7 @@ class UserRepository {
     return rows || [];
   }
 
-  async findById(uuid: String): Promise<User> {
+  async findById(uuid: string): Promise<User> {
     try {
       const query =
         "SELECT uuid, username FROM application_user WHERE uuid = $1";
@@ -25,12 +25,30 @@ class UserRepository {
     }
   }
 
-  async createUser(user: User): Promise<String> {
+  async findByUsernameAndPassword(username: string, password: string): Promise<User | null> {
+    try{
+    const query = `SELECT uuid, username
+    FROM application_user
+    WHERE username = $1
+    AND password = crypt ($2, 'my_salt')`;
+
+    const values = [username, password];
+
+    const { rows } = await db.query<User>(query, values);
+    const [user] = rows;
+    return user || null;
+  } catch (error) {
+    throw new DatabaseError('Erro na consulta do Username e Password', error);
+  }
+}
+  
+  
+  async createUser(user: User): Promise<string> {
     const script = `INSERT INTO application_user (                  username, password) VALUES ($1, crypt ($2, 'my_salt')) RETURNING uuid`;
 
     const values = [user.username, user.password];
 
-    const { rows } = await db.query<{ uuid: String }>(script, values);
+    const { rows } = await db.query<{ uuid: string }>(script, values);
     const [newUser] = rows;
     return newUser.uuid;
   }

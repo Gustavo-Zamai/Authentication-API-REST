@@ -1,7 +1,7 @@
 type User = {
-    uuid?: String;
-    username: String;
-    password?: String;
+    uuid?: string;
+    username: string;
+    password?: string;
 }
 
 export default User; 

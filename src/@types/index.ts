@@ -1,5 +1,6 @@
 import express from "express";
-import errorHandler from "../modules/errors/database.error.model";
+import errorHandler from '../modules/errors/database.error.model';
+import authorizationRoute from "../routes/authorization.route";
 import statusRoute from "../routes/status.route";
 import usersRoute from "../routes/users.route";
 
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 //Route configuration
 app.use(statusRoute);
 app.use(usersRoute);
+app.use(authorizationRoute);
 
 //Error Handler configuration
 app.use(errorHandler);
