@@ -16,13 +16,14 @@ usersRoute.get(
 //  GET-get/users/:uuid
 usersRoute.get(
   "/users/:uuid",
-  (
+   async (
     request: Request<{ uuid: string }>,
     response: Response,
     next: NextFunction
   ) => {
     const uuid = request.params.uuid;
-    //BD.getUserByUUid(uuid);
+    const users = await userRepository.findById(uuid);
+    
     response.status(StatusCodes.OK).send({ uuid });
   }
 );
@@ -30,12 +31,13 @@ usersRoute.get(
 //  POST-post/users
 usersRoute.post(
   "/users",
-  (
+  async (
     request: Request<{ uuid: string }>,
     response: Response,
     next: NextFunction
   ) => {
     const newUser = request.body;
+    const uuid = await userRepository.createUser(newUser);
     response.status(StatusCodes.CREATED).send(newUser);
   }
 );
@@ -43,7 +45,7 @@ usersRoute.post(
 //  PUT-put/users/:uuid
 usersRoute.put(
   "/users/:uuid",
-  (
+  async (
     request: Request<{ uuid: string }>,
     response: Response,
     next: NextFunction
@@ -54,19 +56,22 @@ usersRoute.put(
 
     modifiedUser.uuid = uuid;
 
-    response.status(StatusCodes.OK).send({ modifiedUser });
+    await userRepository.updateUser(modifiedUser);
+
+    response.status(StatusCodes.OK).send({});
   }
 );
 
 //  DELETE-delete/users/:uuid
 usersRoute.delete(
   "/users/:uuid",
-  (
+  async (
     request: Request<{ uuid: string }>,
     response: Response,
     next: NextFunction
   ) => {
     const uuid = request.params.uuid;
+    await userRepository.removeUser(uuid);
     response.sendStatus(StatusCodes.OK);
   }
 );

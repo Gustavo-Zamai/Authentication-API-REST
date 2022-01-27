@@ -3,8 +3,8 @@ CREATE EXTENSION IF NOT EXISTS 'pgcrypto';
 
 CREATE TABLE IF NOT EXISTS application_user(
     uuid uuid DEFAULT uuid_generate_v4(),
-    username VARCHAR(55) NOT NULL,
-    PASSWORD VARCHAR(30) NOT NULL,
+    username VARCHAR NOT NULL,
+    PASSWORD VARCHAR NOT NULL,
     PRIMARY KEY (uuid)
 )
 
