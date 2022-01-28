@@ -1,8 +1,9 @@
-import express from "express";
+import express from 'express';
+import bearerAuthenticationMiddleware from '../routes/authorization.route';
 import errorHandler from '../modules/errors/database.error.model';
-import authorizationRoute from "../routes/authorization.route";
-import statusRoute from "../routes/status.route";
-import usersRoute from "../routes/users.route";
+import authorizationRoute from '../routes/authorization.route';
+import statusRoute from '../routes/status.route';
+import usersRoute from '../routes/users.route';
 
 const app = express();
 //APP configuration
@@ -11,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Route configuration
 app.use(statusRoute);
-app.use(usersRoute);
+app.use(bearerAuthenticationMiddleware, usersRoute);
 app.use(authorizationRoute);
 
 //Error Handler configuration
