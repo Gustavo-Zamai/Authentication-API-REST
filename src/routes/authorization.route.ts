@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction, Router } from "express";
 import ForbiddenError from "../modules/errors/forbidden.error.model";
 import userRepository from "../repositories/user.repository";
-import JWT from "jsonwebtoken";
+import JWT, { SignOptions } from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import jwtAuthenticationMiddleware from "../../middlewares/jwt-authentication.middleware";
 
@@ -28,7 +28,7 @@ authorizationRoute.post(
       }
 
       const jwtPayload = { username: user.username };
-      const jwtOptions = { subject: user?.uuid };
+      const jwtOptions: SignOptions = { subject: user?.uuid, expiresIn: '10m' };
       const secretKey = "my_secret_key";
 
       const jwt = JWT.sign(jwtPayload, secretKey, jwtOptions);
