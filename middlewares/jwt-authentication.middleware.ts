@@ -3,7 +3,7 @@ import JWT from "jsonwebtoken";
 import ForbiddenError from "../src/modules/errors/forbidden.error.model";
 import userRepository from "../src/repositories/user.repository";
 
-async function bearerAuthenticationMiddleware(
+async function jwtAuthenticationMiddleware(
   request: Request,
   response: Response,
   next: NextFunction
@@ -20,6 +20,7 @@ async function bearerAuthenticationMiddleware(
       throw new ForbiddenError("Tipo de autenticação inválido!");
     }
 
+    try{
     const tokenPayload = JWT.verify(token, "my_secret_key");
 
     if (typeof tokenPayload !== "object" || !tokenPayload.sub) {
@@ -33,9 +34,12 @@ async function bearerAuthenticationMiddleware(
     };
     request.user = user;
     next();
+  }catch (error) {
+    throw new ForbiddenError('Token Inválido!');
+  }
   } catch (error) {
     next(error);
   }
 }
 
-export default bearerAuthenticationMiddleware;
+export default jwtAuthenticationMiddleware;
